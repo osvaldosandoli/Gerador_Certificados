@@ -6,7 +6,7 @@ docker-compose up
 
 
 <h1>JSON</h1>
-{
+{</br>
     "nome": "Osvaldo", </br>
     "nacionalidade": "Malasio",</br>
     "estado": "XA",</br>
