@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # Porta padrão do RabbitMQ
+      - "15672:15672" # Interface de gerenciamento (opcional)
+    networks:
+      - certificado_network
+  api:
+    build: 
+      context: .
+      dockerfile: ./API/Dockerfile
+    container_name: certificado_api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - certificado_network
+
+     # Serviço Worker
+  worker:
+    build: 
+      context: .
+      dockerfile: ./Worker/Dockerfile  # Ajuste conforme necessário, se o Worker tiver um Dockerfile próprio
+    container_name: certificado_worker
+    depends_on:
+      - rabbitmq  # Se o Worker precisar do RabbitMQ para consumir a fila
+      - mysql     # Se o Worker precisar acessar o banco de dados
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - certificado_network
+    command: python /app/Worker/app.py  # Comando para rodar o Worker
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: senha
+      MYSQL_DATABASE: certificados_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./Database/ddl.sql:/docker-entrypoint-initdb.d/ddl.sql  # Monta o script SQL
+    networks:
+      - certificado_network
+
+networks:
+  certificado_network:
+    driver: bridge
