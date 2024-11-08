@@ -1,7 +1,7 @@
 # Gerador_Certificados
 
 <h1> Comandos </h1>
-docker compose down --rmi all -v
+docker compose down --rmi all -v </br>
 docker-compose up
 
 
