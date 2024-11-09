@@ -1,60 +1,62 @@
 <!DOCTYPE html>
-<html lang='pt-br'>
+<html lang="pt-br">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diploma</title>
     <style>
-        /* @media print {
+         @media print {
             @page {
-                size: A4 landscape;
-                margin: 0;
+                size: A4;
+                margin: 0; /* Remove margem padrão */
             }
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            body::before, body::after {
-                display: none;
-            }
-        } */
         body {
             font-family: 'Times New Roman', Times, serif;
-            background-color: #f4f4f4;
+            background-color: #8b8686;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            width: 100%;  /* Largura total */
+            height: 100%; 
+            /* background-color: aquamarine; */
         }
+    }
         .diploma-container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px;
+            width: 100%;  /* Largura total */
+            height: 100%;  /* Altura total da página */
+            padding: 0;  /* Remova o padding interno */
             background-color: white;
-            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
         }
         .header {
             text-align: center;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
+            margin-top: 0;
         }
         .sub-header {
             text-align: center;
-            font-size: 20px;
-            margin: 10px 0;
+            font-size: 24px;
+            margin: 5px 0;
         }
         .content {
-            margin: 40px 0;
+            text-align: center;
+            margin: 20px 0;
             font-size: 18px;
             line-height: 1.5;
+            width: 90%;
         }
         .signatures {
-            margin-top: 50px;
+            margin-top: 30px;
             display: flex;
             justify-content: space-between;
+            width: 80%;
         }
         .signature {
             text-align: center;
@@ -64,29 +66,29 @@
         }
         .date {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 20px;
             font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <div class='diploma-container'>
-        <div class='header'>Universidade de Programação</div>
-        <div class='sub-header'>Certificado de Conclusão</div>
-        <div class='content'>
+    <div class="diploma-container">
+        <div class="header">Universidade de Programação</div>
+        <div class="sub-header">Certificado de Conclusão</div>
+        <div class="content">
             <p>
-                Certificamos que <strong>{{ nome }}</strong>, {{ nacionalidade }}, natural do Estado de {{ estado }}, nascido em {{ data_nascimento }}, RG {{ documento }}, concluiu em {{ data_conclusao }} o curso de {{ curso }}, nível de especialização, com carga horária de {{ carga_horaria }} horas.
+                Certificamos que <strong>{{ nome }}</strong>, <strong>{{ nacionalidade }}</strong>, natural do Estado de <strong>{{ estado }}</strong>, nascido em <strong>{{ data_nascimento }}</strong>, RG <strong>{{ documento }}</strong>, concluiu em <strong>{{ data_conclusao }}</strong> o curso de <strong>{{ curso }}</strong>, nível de especialização, com carga horária de <strong>{{ carga_horaria }}</strong> horas.
             </p>
             <p>
                 Este certificado é concedido em conformidade com o artigo 44, inciso 3353, da Lei 9394/96, e com a Resolução 
                 C.N.C./C.C.S. nº 01/07.
             </p>
         </div>
-        <div class='date'>São Paulo, {{ data_emissao }}</div>
-        <div class='signatures'>
-            <div class='signature'>
+        <div class="date">São Paulo, <strong>{{ data_emissao }}</strong></div>
+        <div class="signatures">
+            <div class="signature">
                 <p><strong>{{ nome_assinatura }}</strong></p>
-                <p>{{ cargo }}</p>
+                <p><strong>{{ cargo }}</strong></p>
             </div>            
         </div>
     </div>

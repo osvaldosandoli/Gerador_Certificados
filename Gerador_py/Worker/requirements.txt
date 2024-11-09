@@ -2,3 +2,6 @@ pika
 pdfkit
 wkhtmltopdf
 jinja2
+sqlalchemy
+mysql-connector-python
+flask_sqlalchemy

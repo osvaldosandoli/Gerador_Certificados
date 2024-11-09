@@ -2,6 +2,7 @@
 FROM python:3.11-slim
 
 
+#Para rodar o wkhtmltopdf
 RUN apt-get update && \
     apt-get install -y \
     wkhtmltopdf \
@@ -22,7 +23,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./Worker /app/Worker
 COPY ./Model /app/Model
 COPY ./Database /app/Database
-COPY ./SaveCertificado /app/SaveCertificado
+COPY ./wait-script/wait-for-it.sh /app/wait-for-it.sh
+
+# Conceda permissão de execução ao script
+RUN chmod +x /app/wait-for-it.sh
+#COPY ./SaveCertificado /app/SaveCertificado
 
 # Copie os templates HTML da pasta 'Template' para dentro do container
 COPY ./Worker/Template /app/Template
@@ -33,4 +38,4 @@ COPY ./Worker/Template /app/Template
 #Porta do RabbitMQ, se o Worker for se comunicar diretamente com ele
 
 # Comando para rodar o Worker
-CMD ["python", "Worker/app.py"]
+CMD ["/app/wait-for-it.sh", "rabbitmq:5672", "--", "python", "Worker/app.py"]

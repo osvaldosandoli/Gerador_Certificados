@@ -6,10 +6,9 @@ import pika
 # Adiciona o diretório raiz do projeto ao sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-
 from Database.config import Config
 from Model.Certificados import Certificado, db
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 
 import json
 
@@ -68,10 +67,21 @@ def criar_certificado():
         return jsonify({'error': str(e)}), 400
 
 
-@app.route('/certificado', methods=['GET'])
-def vrf():
-        return jsonify({'message': 'sucesso!'}), 201
-    
+@app.route('/certificado/<int:id>', methods=['GET'])
+def getCertificado(id): 
+    session = db.session()  
+    try:
+        certificado = session.query(Certificado).filter_by(id=id).first()
+        if certificado and certificado.caminho:
+            return send_file(certificado.caminho, as_attachment=True)
+        else:
+            return jsonify({"erro": "Certificado não encontrado"}), 404
+    except Exception as e:
+        print(f"Erro ao buscar o diploma: {e}")
+        return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
+    finally:
+        session.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
