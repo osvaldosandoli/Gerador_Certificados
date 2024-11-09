@@ -19,10 +19,10 @@ docker-compose up
     "nome_assinatura": "Marcos Sem Minie",</br>
     "cargo": "Doutor",</br>
     "caminhoPDF": ""</br>
-}
+}</br>
 
-</br>
-Possiveis Erros e suas Correções:
+
+Possiveis Erros e suas Correções: </br>
 ERRO GERADO DURANTE A INICIALIZAÇÃO DO CONTAINER DE certificado_worker em algumas maquinas: </br>
 certificado_worker  | /usr/bin/env: ‘bash\r’: No such file or directory </br>
 certificado_worker  | /usr/bin/env: use -[v]S to pass options in shebang lines </br>
