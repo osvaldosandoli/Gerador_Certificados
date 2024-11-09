@@ -21,12 +21,12 @@ docker-compose up
     "caminhoPDF": ""</br>
 }
 
-
+</br>
 Possiveis Erros e suas Correções:
 ERRO GERADO DURANTE A INICIALIZAÇÃO DO CONTAINER DE certificado_worker em algumas maquinas: </br>
 certificado_worker  | /usr/bin/env: ‘bash\r’: No such file or directory </br>
 certificado_worker  | /usr/bin/env: use -[v]S to pass options in shebang lines </br>
 </br>
 Correção. Executar o seguinte comando no GIT BASH no diretorio ../wait-script </br>
-<script> sed -i 's/\r//' wait-for-it.sh </script>
+Comando:  sed -i 's/\r//' wait-for-it.sh
 
