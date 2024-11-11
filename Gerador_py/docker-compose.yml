@@ -4,8 +4,15 @@ services:
     image: "rabbitmq:3-management"
     container_name: rabbitmq
     ports:
-      - "5672:5672"   # Porta padrão do RabbitMQ
-      - "15672:15672" # Interface de gerenciamento (opcional)
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - certificado_network
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
     networks:
       - certificado_network
 
@@ -18,6 +25,7 @@ services:
       - "5000:5000"
     depends_on:
       - mysql
+      - redis
     environment:
       - FLASK_ENV=development
     networks:
@@ -25,21 +33,19 @@ services:
     volumes:
       - ./SaveCertificado:/app/API/SaveCertificado
 
-# Serviço Worker
   worker:
     build: 
       context: .
-      dockerfile: ./Worker/Dockerfile  # Ajuste conforme necessário, se o Worker tiver um Dockerfile próprio
+      dockerfile: ./Worker/Dockerfile
     container_name: certificado_worker
     depends_on:
-      - rabbitmq # Se o Worker precisar do RabbitMQ para consumir a fila
-      - mysql     # Se o Worker precisar acessar o banco de dados
+      - rabbitmq
+      - mysql
     environment:
       - FLASK_ENV=development
       - WAIT_HOSTS=rabbitmq:5672
     networks:
       - certificado_network
-    command: python /app/Worker/app.py  # Comando para rodar o Worker
     volumes:
       - ./SaveCertificado:/app/SaveCertificado
     entrypoint: ["./wait-for-it.sh", "rabbitmq:5672", "--", "python", "Worker/app.py"]
@@ -53,7 +59,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./Database/ddl.sql:/docker-entrypoint-initdb.d/ddl.sql  # Monta o script SQL
+      - ./Database/ddl.sql:/docker-entrypoint-initdb.d/ddl.sql
     networks:
       - certificado_network
 

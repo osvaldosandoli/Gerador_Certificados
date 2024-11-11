@@ -1,4 +1,3 @@
-# Use a imagem base para Python
 FROM python:3.9-slim
 
 # Defina o diretório de trabalho no contêiner

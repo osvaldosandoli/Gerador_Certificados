@@ -3,8 +3,6 @@ import pika
 import pdfkit
 import sys
 import os
-
-# Adiciona o diretório /app ao sys.path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from Model.Certificados import Certificado
@@ -22,10 +20,8 @@ DATABASE_URI = config.Config.SQLALCHEMY_DATABASE_URI
 engine = create_engine(DATABASE_URI)
 Session = sessionmaker(bind=engine)
 
-def generate_unique_pdf_path(base_path, nome):
-    """
-    Gera um caminho de arquivo PDF único com base no nome e um contador.
-    """
+# Método responsavel por incluir um contador no nome do certificado impedindo nomes duplicados
+def renameCertificado(base_path, nome):
     counter = 1
     base_path = "./SaveCertificado"
     pdf_path = f"{base_path}/{nome}_certificado.pdf"
@@ -34,10 +30,10 @@ def generate_unique_pdf_path(base_path, nome):
     while os.path.exists(pdf_path):
         pdf_path = f"{base_path}/{nome}_{counter}_certificado.pdf"
         counter += 1
-    
     return pdf_path
 
-def consume_from_rabbitmq():
+# Método para consumir os dados na lista do Rabbit
+def consume_rabbit():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq', port=5672))
     channel = connection.channel()
     
@@ -47,17 +43,17 @@ def consume_from_rabbitmq():
         data = json.loads(body)
         print(f"Recebido: {data}")
 
-        # Preenche o template com os dados do JSON
+        # Recebendo os dados do JSON
         html_content = template.render(data)
 
-        # Define o caminho único para o arquivo PDF
+        # Definindo o conteudo do Caminho e do Nome do arquivo
         base_path = "./SaveCertificado"
-        pdf_path = generate_unique_pdf_path(base_path, data['nome'])
+        pdf_path = renameCertificado(base_path, data['nome'])
 
         # Configuração do wkhtmltopdf
         config_pdfkit = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
 
-        # Opções para a geração do PDF
+        # Opções de layout para a geração do PDF
         options = {
             'orientation': 'Landscape',
         }
@@ -66,7 +62,7 @@ def consume_from_rabbitmq():
         pdfkit.from_string(html_content, pdf_path, configuration=config_pdfkit, options=options)
         print(f"PDF gerado: {pdf_path}")
 
-        # Conectar ao banco de dados e atualizar o caminho do PDF na tabela
+        # Conectar ao SQL e atualizar a coluna de Caminho
         session = Session()
         try:
             # Consulta o certificado correspondente para atualização do caminho
@@ -90,4 +86,4 @@ def consume_from_rabbitmq():
 
 
 if __name__ == "__main__":
-    consume_from_rabbitmq()
+    consume_rabbit()

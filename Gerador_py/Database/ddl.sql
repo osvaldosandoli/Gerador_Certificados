@@ -17,4 +17,4 @@ create table IF NOT EXISTS certificados
         nome_assinatura varchar(100) not null,
         cargo varchar(100) not null,
         caminho varchar(100)
-        );
+);
