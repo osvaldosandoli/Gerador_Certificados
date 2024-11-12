@@ -30,3 +30,26 @@ certificado_worker  | /usr/bin/env: use -[v]S to pass options in shebang lines <
 Correção. Executar o seguinte comando no GIT BASH no diretorio ../wait-script </br>
 Comando:  sed -i 's/\r//' wait-for-it.sh
 
+</br>
+Erro em Mac:
+</br>
+services.mysql Additional property plataform is not allowed
+</br>
+Correcao: No arquivo docker-compose.yml alterar o servico do MySQL para: </br>
+mysql: </br>
+    image: mysql:8 </br>
+    container_name: mysql </br>
+    environment: </br>
+      MYSQL_ROOT_PASSWORD: senha </br>
+      MYSQL_DATABASE: certificados_db </br>
+    ports: </br>
+      - "3306:3306" </br>
+    volumes: </br>
+      - ./Database/ddl.sql:/docker-entrypoint-initdb.d/ddl.sql </br>
+    networks: </br>
+      - certificado_network </br>
+    platform: linux/arm64/v8 </br>
+    </br>
+
+
+
