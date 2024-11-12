@@ -23,7 +23,7 @@ docker-compose up
 
 
 Possiveis Erros e suas Correções: </br>
-ERRO GERADO DURANTE A INICIALIZAÇÃO DO CONTAINER DE certificado_worker em algumas maquinas: </br>
+<h3>ERRO GERADO DURANTE A INICIALIZAÇÃO DO CONTAINER DE certificado_worker em algumas maquinas: </h3></br>
 certificado_worker  | /usr/bin/env: ‘bash\r’: No such file or directory </br>
 certificado_worker  | /usr/bin/env: use -[v]S to pass options in shebang lines </br>
 </br>
@@ -31,7 +31,7 @@ Correção. Executar o seguinte comando no GIT BASH no diretorio ../wait-script 
 Comando:  sed -i 's/\r//' wait-for-it.sh
 
 </br>
-Erro em Mac:
+<h3>Erro em Mac: Gerado na execução do comando docker-compoose up </h3>
 </br>
 services.mysql Additional property plataform is not allowed
 </br>
