@@ -45,7 +45,7 @@ curl --location 'http://localhost:5000/certificado/1'
 }</br>
 
 
-Possiveis Erros e suas Correções: </br>
+<h1> Possiveis Erros e suas Correções: </h1></br>
 <h3>ERRO GERADO DURANTE A INICIALIZAÇÃO DO CONTAINER DE certificado_worker em algumas maquinas: </h3></br>
 certificado_worker  | /usr/bin/env: ‘bash\r’: No such file or directory </br>
 certificado_worker  | /usr/bin/env: use -[v]S to pass options in shebang lines </br>
