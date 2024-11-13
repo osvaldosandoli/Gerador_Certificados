@@ -5,6 +5,30 @@ docker compose down --rmi all -v </br>
 docker-compose up
 
 
+
+
+
+#CURL POSTMAN
+curl --location 'http://localhost:5000/certificado' \
+--header 'Content-Type: application/json' \
+--data '{
+"nome": "Osvaldo",
+"nacionalidade": "Malasio",
+"estado": "XA",
+"data_nascimento": "2000-01-10",
+"documento": "2222-00",
+"data_conclusao": "2024-08-11",
+"curso": "JAVA Starter",
+"carga_horaria": 12,
+"data_emissao": "2024-11-02",
+"nome_assinatura": "Marcos Sem Minie",
+"cargo": "Doutor",
+"caminhoPDF": ""
+}'
+
+
+curl --location 'http://localhost:5000/certificado/1'
+
 <h1>JSON</h1>
 {</br>
     "nome": "Osvaldo", </br>
@@ -50,6 +74,7 @@ mysql: </br>
       - certificado_network </br>
     platform: linux/arm64/v8 </br>
     </br>
+
 
 
 
