@@ -4,11 +4,10 @@
 docker compose down --rmi all -v </br>
 docker-compose up
 
+</br>
 
-
-
-
-#CURL POSTMAN
+<h1>#CURL POSTMAN</h1>
+<h3>Método POST</h3>
 curl --location 'http://localhost:5000/certificado' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -25,8 +24,8 @@ curl --location 'http://localhost:5000/certificado' \
 "cargo": "Doutor",
 "caminhoPDF": ""
 }'
-
-
+</br>
+<h3>Método GET</h3>
 curl --location 'http://localhost:5000/certificado/1'
 
 <h1>JSON</h1>
